@@ -147,7 +147,7 @@ function fdd(sigs::MultiChannelSignals,nfft,numbers_eigs::Int64;windows = hannin
     FDD(sigs,p,fvec,sv)
 end
 
-@recipe function plot(sig::MultiChannelSignals,channel::Int64)
+@recipe function f(sig::MultiChannelSignals,channel::Int64)
     @assert channel<nchannels(sig) "channel should not greater than $(nchannels(sig))"
     dt = 1/sig.sample_rate
     t = 0:dt:dt*(sig.length-1)
@@ -157,7 +157,7 @@ end
     t,sig.data[:,channel]
 end
 
-@recipe function plot(fdd::FDD)
+@recipe function f(fdd::FDD)
     legend := false
     xguide := "frequencies Hz"
     yguide := "Amplitude Db"
@@ -168,7 +168,7 @@ end
     end
 end
 
-@recipe function plot(fdd::FDD,fp::Array{T,1},n::Int64) where T
+@recipe function f(fdd::FDD,fp::Array{T,1},n::Int64) where T
     Δf = fdd.freq[end]/length(fdd.freq)
     nn = round.(fp./Δf,RoundUp)
     nn = Int.(nn)
@@ -188,11 +188,10 @@ end
     end
 end
 
-@recipe function plot(fdd::FDD,freq::Float64,n::Int64)
+@recipe function f(fdd::FDD,freq::Float64,n::Int64)
     xguide := "nodes"
     yguide := "Amplitude"
     abs.(peak_modal(fdd,freq,n))
-    
 end
 """
     findpeak(fdd::FDD,n::Int64;σ=2,threshold=10)
@@ -244,6 +243,6 @@ function peak_modal(fdd::FDD,fp::Float64,n::Int64)
     decomposition(fdd.psd,nn,n)
 end
 
-export cpsd,fdd,peak_modal,findmaxeigs,plot,mac
+export cpsd,fdd,peak_modal,findmaxeigs,f,mac
 
 
