@@ -11,6 +11,7 @@ MAT = "23992714-dd62-5051-b70f-ba57cb901cac"
 RecipesBase = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
 
 [compat]
+RecipesBase = "1.1"
 julia = "1.5"
 
 [extras]
